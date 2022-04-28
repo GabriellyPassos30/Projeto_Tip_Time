@@ -22,54 +22,23 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun calculateTip() {
-
-
-        val stringInTextField = binding.costOfServiceEditText.text.toString()
-
-
+    fun calculateTip() {
+        val stringInTextField = binding.costOfService.text.toString()
         val cost = stringInTextField.toDouble()
-
-
-
-
-        val tipPercentage = when (binding.tipOptions.checkedRadioButtonId) {
+        val selectedId = binding.tipOptions.checkedRadioButtonId
+        val tipPercentage = when (selectedId) {
             R.id.option_twenty_percent -> 0.20
             R.id.option_eighteen_percent -> 0.18
             else -> 0.15
         }
-
-
         var tip = tipPercentage * cost
-
-
-        if (binding.roundUpSwitch.isChecked) {
+        val roundUp = binding.roundUpSwitch.isChecked
+        if (roundUp) {
             tip = kotlin.math.ceil(tip)
         }
-
-
-        val formatedTip = NumberFormat.getCurrencyInstance().format(tip)
-
-
-        binding.tipResult.text = getString(R.string., formatedTip)
-    }
-
-
-    private fun handleKeyEvent(view: View, keyCode: Int): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_ENTER) {
-
-            val inputMethodManager =
-                getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
-            return true
-        }
-        return false
+        val formattedTip = NumberFormat.getCurrencyInstance().format(tip)
+        binding.tipResult.text = getString(R.string.tip_amount, formattedTip)
     }
 }
 
 
-
-
-
-    }
-}
